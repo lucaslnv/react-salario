@@ -12,9 +12,10 @@ const App = () => {
   const [baseIprf, setBaseIprf] = useState('R$ 0,00');
   const [descontoIprf, setDescontoIprf] = useState('R$ 0,00');
   const [salarioLiquido, setSalarioLiquido] = useState('R$ 0,00');
+  const [salarioLiquidoReverso, setSalarioLiquidoReverso] = useState('');
 
   useEffect(() => {
-    if(salarioBruto !== ''){
+    if(salarioBruto !== '' && salarioBruto > 0){
       setBaseInss(CalculoBaseInss(salarioBruto));
       setDescontoInss(CalculoDescontoInss(salarioBruto));
     }else{
@@ -37,7 +38,7 @@ const App = () => {
     }else{
       setDescontoIprf('0.00');
     }
-  },[baseIprf]);
+  },[salarioBruto, baseIprf]);
 
   useEffect(() => {
     if(salarioBruto !== ''){
@@ -47,6 +48,10 @@ const App = () => {
     }
   },[salarioBruto, descontoInss, descontoIprf]);
 
+  function calcularSalarioLiquido(){
+    setSalarioBruto(salarioLiquidoReverso);
+  }
+  
   return (
     <>
       {/* TITULO */}
@@ -57,7 +62,6 @@ const App = () => {
       <div className="cards">
         
         {/* CALCULO EM TEMPO REAL */}
-
         <div className="left">
           <h3>Cálculo em tempo real</h3>
           <br/>
@@ -87,14 +91,13 @@ const App = () => {
         </div>
         
         {/* CALCULO REVERSO */}
-
         <div className="right">
           <h3>Cálculo reverso com Observables</h3>
           <br/>
           <label>Salário líquido desejado:</label>
-          <input type="number" />
+          <input value={salarioLiquidoReverso} type="number" onChange={e => setSalarioLiquidoReverso(e.target.value)} />
           <br/>
-          <button>Calcular salário bruto correspondente</button>
+          <button onClick={calcularSalarioLiquido}>Calcular salário bruto correspondente</button>
         </div>
       </div>
     </>
