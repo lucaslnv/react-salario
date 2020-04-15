@@ -57,7 +57,7 @@ const App = () => {
       {/* TITULO */}
       <div className="header">
         <img src={logo} className="logo" alt="logo" />
-        <h2>Cálculo de salário com ReactJS</h2>
+        <h2>Cálculo de salário com React JS</h2>
       </div>
       <div className="cards">
         
